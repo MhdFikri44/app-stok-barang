@@ -9,27 +9,39 @@ if (isset($_SESSION['login'])) {
 if (isset($_POST['login'])) {
     $user = $_POST['username'];
     $pass = $_POST['password'];
+    $role = $_POST['role'];
 
-    $query = "SELECT * FROM tb_login WHERE username='$user' AND password='$pass'";
-    $result = mysqli_query($conn, $query);
-    $num = mysqli_num_rows($result);
-
-    if ($num == 1) {
-        $row = mysqli_fetch_assoc($result);
-
-        if ($row['username'] == 'admin' && $row['password'] == 'admin') {
-            $_SESSION['login'] = $row['username'];
-            $_SESSION['role'] = 'admin';
-            header('location:admin.php');
-        } else {
-            $_SESSION['login'] = $row['username'];
-            $_SESSION['role'] = 'user';
-            header('location:user.php');
-        }
-    } else {
+    if ($role == 'role') {
         echo "<script>
-                alert('User atau sandi salahh!!!');
+                alert('Silahkan pilih role!!!');
             </script>";
+    } else {
+        $query = "SELECT * FROM tb_login WHERE username='$user' AND password='$pass'";
+        $result = mysqli_query($conn, $query);
+        $num = mysqli_num_rows($result);
+
+        if ($num == 1) {
+            $row = mysqli_fetch_assoc($result);
+
+            if ($role == $row['role']) {
+                $_SESSION['login'] = $row['username'];
+                $_SESSION['role'] = $row['role'];
+                header('location:admin.php');
+            }
+            if ($role == $row['role']) {
+                $_SESSION['login'] = $row['username'];
+                $_SESSION['role'] = $row['role'];
+                header('location:user.php');
+            } else {
+                echo "<script>
+                alert('User tidak ditemukan dirole ini!!!');
+            </script>";
+            }
+        } else {
+            echo "<script>
+                alert('User atau sandi tidak ditemukan!!!');
+            </script>";
+        }
     }
 }
 ?>
@@ -70,12 +82,13 @@ if (isset($_POST['login'])) {
                                         <div class="form-group">
                                             <input type="password" name="password" class="form-control form-control-user" id="exampleInputPassword" placeholder="Password" required>
                                         </div>
+                                        <!-- pilih role -->
                                         <div class="form-group">
-                                            <div class="custom-control custom-checkbox small">
-                                                <input type="checkbox" class="custom-control-input" id="customCheck">
-                                                <label class="custom-control-label" for="customCheck">Remember
-                                                    Me</label>
-                                            </div>
+                                            <select name="role" class="form-control rounded-pill" style="font-size: 13px;">
+                                                <option value="role" selected>Pilih Role</option>
+                                                <option value="admin">Admin</option>
+                                                <option value="user">User</option>
+                                            </select>
                                         </div>
                                         <!-- submit -->
                                         <button type="submit" name="login" class="btn btn-primary btn-user btn-block">Login</button>

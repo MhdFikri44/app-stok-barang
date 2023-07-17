@@ -4,21 +4,28 @@ include 'components/koneksi.php';
 if (isset($_POST['tambah'])) {
     $user = $_POST['username'];
     $pass = $_POST['password'];
+    $role = $_POST['role'];
 
-    $query = "SELECT * FROM tb_login WHERE username='$user' AND password='$pass'";
-    $result = mysqli_query($conn, $query);
-    $num = mysqli_num_rows($result);
-
-    if ($num == 0) {
-        $insert = "INSERT INTO tb_login (username, password) VALUES ('$user','$pass')";
-        $result = mysqli_query($conn, $insert);
+    if ($role == 'role') {
         echo "<script>
-                alert('User berhasil ditambah!!!');
+                alert('Silahkan pilih role!!!');
             </script>";
     } else {
-        echo "<script>
+        $query = "SELECT * FROM tb_login WHERE username='$user' AND password='$pass'";
+        $result = mysqli_query($conn, $query);
+        $num = mysqli_num_rows($result);
+
+        if ($num == 0) {
+            $insert = "INSERT INTO tb_login (username, password, role) VALUES ('$user','$pass','$role')";
+            $result = mysqli_query($conn, $insert);
+            echo "<script>
+                alert('User berhasil ditambah!!!');
+            </script>";
+        } else {
+            echo "<script>
                 alert('User sudah adaa!!!');
             </script>";
+        }
     }
 }
 ?>
@@ -58,6 +65,14 @@ if (isset($_POST['tambah'])) {
                                         <!-- password -->
                                         <div class="form-group">
                                             <input type="password" name="password" class="form-control form-control-user" id="exampleInputPassword" placeholder="Password" required>
+                                        </div>
+                                        <!-- pilih role -->
+                                        <div class="form-group">
+                                            <select name="role" class="form-control rounded-pill" style="font-size: 13px;">
+                                                <option value="role" selected>Pilih Role</option>
+                                                <option value="admin">Admin</option>
+                                                <option value="user">User</option>
+                                            </select>
                                         </div>
                                         <!-- submit -->
                                         <button type="submit" name="tambah" class="btn btn-primary btn-user btn-block">Tambah</button>
