@@ -68,7 +68,7 @@ if (isset($_POST['tambah'])) {
                                         </div>
                                         <!-- pilih role -->
                                         <div class="form-group">
-                                            <select name="role" class="form-control rounded-pill" style="font-size: 13px;">
+                                            <select name="role" class="form-control rounded-pill" style="font-size: 13px; height: 50px">
                                                 <option value="role" selected>Pilih Role</option>
                                                 <option value="admin">Admin</option>
                                                 <option value="user">User</option>
