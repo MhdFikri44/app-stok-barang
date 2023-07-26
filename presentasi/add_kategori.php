@@ -5,11 +5,19 @@ session_start();
 if (isset($_POST['tambah'])) {
     $kategori = $_POST['kategori'];
 
-    $query = "INSERT INTO tb_kategori (kategori)
-    VALUES ('$kategori')";
+    $q = mysqli_query($conn, "SELECT * FROM tb_kategori WHERE kategori='$kategori'");
+    $cek = mysqli_num_rows($q);
+    // cek apakah kategori sudah ada
+    if ($cek == 1) {
+        echo "<script>
+                alert('Kategori sudah ada!');
+            </script>";
+    } else {
+        $query = "INSERT INTO tb_kategori (kategori) VALUES ('$kategori')";
 
-    mysqli_query($conn, $query);
-    header('location:data_kategori.php');
+        mysqli_query($conn, $query);
+        header('location:data_kategori.php');
+    }
 }
 ?>
 

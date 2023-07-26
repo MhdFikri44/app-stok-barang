@@ -53,30 +53,38 @@ if ($_SESSION['role'] == 'Pimpinan') {
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
+                                            <th>No</th>
                                             <th>Kode</th>
                                             <th>Nama</th>
                                             <th>Kategori</th>
                                             <th>Jumlah</th>
                                             <th>Pemasok</th>
+                                            <th>Gambar</th>
                                             <th>Aksi</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <?php
+                                        $i = 1;
                                         $result = mysqli_query($conn, "SELECT * FROM tb_data A, tb_kategori B, tb_pemasok C WHERE A.kategori_id=B.id_kategori AND A.pemasok_id=C.id_pemasok");
                                         while ($row = mysqli_fetch_assoc($result)) :
                                         ?>
                                             <tr>
+                                                <td><?= $i; ?></td>
                                                 <td><?= $row['kode_barang']; ?></td>
                                                 <td><?= $row['nama_barang']; ?></td>
                                                 <td><?= $row['kategori']; ?></td>
                                                 <td><?= $row['jumlah']; ?></td>
                                                 <td><?= $row['pemasok']; ?></td>
                                                 <td>
+                                                    <img src="uploaded/<?= $row['gambar']; ?>" width="100" height="100" style="background-position: center; object-fit: cover;">
+                                                </td>
+                                                <td>
                                                     <a href="edit.php?id_data=<?= $row['id_data']; ?>"><i class="fas fa-fw fa-edit"></i></a> -
                                                     <a href="proses/hapus.php?id_data=<?= $row['id_data']; ?>" onclick="return confirm('Yakin ingin hapus?')"><i class="fas fa-fw fa-trash"></i></a>
                                                 </td>
                                             </tr>
+                                            <?php $i++; ?>
                                         <?php endwhile; ?>
                                     </tbody>
                                 </table>

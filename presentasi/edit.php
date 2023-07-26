@@ -15,20 +15,20 @@ if (isset($_POST['edit'])) {
     $pemasok = $_POST['pemasok'];
 
     // cek apakah user pilih gambar baru atau tidak
-    // if ($_FILES['gambar']['name'] != "") {
-    //     // ambil nama gambar lama
-    //     $q = mysqli_query($conn, "SELECT gambar FROM tb_data WHERE id = $id");
-    //     $ary = mysqli_fetch_assoc($q);
-    //     $gambar = $ary['gambar'];
-    //     // hapus gambar lama
-    //     unlink("uploaded/" . $gambar);
-    //     // upload gambar baru
-    //     $gambarBaru = basename($_FILES["gambar"]["name"]);
-    //     $target_file = "uploaded/" . $gambarBaru;
-    //     $upload = move_uploaded_file($_FILES["gambar"]["tmp_name"], $target_file);
+    if ($_FILES['gambar']['name'] != "") {
+        // ambil nama gambar lama
+        $q = mysqli_query($conn, "SELECT gambar FROM tb_data WHERE id_data = $id");
+        $ary = mysqli_fetch_assoc($q);
+        $gambar = $ary['gambar'];
+        // hapus gambar lama
+        unlink("uploaded/" . $gambar);
+        // upload gambar baru
+        $gambarBaru = basename($_FILES["gambar"]["name"]);
+        $target_file = "uploaded/" . $gambarBaru;
+        $upload = move_uploaded_file($_FILES["gambar"]["tmp_name"], $target_file);
 
-    //     mysqli_query($conn, "UPDATE tb_data SET gambar='$gambarBaru' WHERE id = $id");
-    // }
+        mysqli_query($conn, "UPDATE tb_data SET gambar='$gambarBaru' WHERE id_data = $id");
+    }
 
     mysqli_query($conn, "UPDATE tb_data 
                         SET kode_barang = '$kode_barang',
@@ -101,7 +101,7 @@ if (isset($_POST['edit'])) {
                                                     <!-- kategori -->
                                                     <div class="form-group">
                                                         <label for="kategori">Kategori</label>
-                                                        <select name="kategori" id="kategori" class="form-control rounded-pill" style="font-size: 13px; height: 50px">
+                                                        <select name="kategori" id="kategori" class="form-control rounded-pill" style="font-size: 13px; height: 50px" required>
                                                             <option value="">Pilih Kategori</option>
                                                             <?php
                                                             $kategori = mysqli_query($conn, "SELECT * FROM tb_kategori");
@@ -121,7 +121,7 @@ if (isset($_POST['edit'])) {
                                                     <!-- pemasok -->
                                                     <div class="form-group">
                                                         <label for="pemasok">Pemasok</label>
-                                                        <select name="pemasok" id="Pemasok" class="form-control rounded-pill" style="font-size: 13px; height: 50px">
+                                                        <select name="pemasok" id="Pemasok" class="form-control rounded-pill" style="font-size: 13px; height: 50px" required>
                                                             <option value="">Pilih Pemasok</option>
                                                             <?php
                                                             $pemasok = mysqli_query($conn, "SELECT * FROM tb_pemasok");
@@ -134,11 +134,11 @@ if (isset($_POST['edit'])) {
                                                         </select>
                                                     </div>
                                                     <!-- gambar -->
-                                                    <!-- <div class="form-group" style="font-size: 13px;">
+                                                    <div class="form-group">
                                                         <label for="gambar">Input gambar : </label><br>
-                                                        <img src="uploaded/<?= $row['gambar'] ?>" width="150">
-                                                        <br><br><input type="file" name="gambar" id="gambar">
-                                                    </div> -->
+                                                        <img src="uploaded/<?= $row['gambar'] ?>" width="150" height="100px" style="background-position: center; object-fit: cover;">
+                                                        <br><br><input type="file" name="gambar" id="gambar" style="font-size: 12px;">
+                                                    </div>
                                                     <hr>
                                                     <!-- tambah -->
                                                     <button type="submit" name="edit" class="btn btn-primary btn-user btn-block">Edit</button>

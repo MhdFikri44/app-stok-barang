@@ -12,7 +12,7 @@ if (isset($_POST['tambah'])) {
                 alert('Silahkan pilih role!!!');
             </script>";
     } else {
-        $query = "SELECT * FROM tb_login WHERE username='$user' AND password='$pass'";
+        $query = "SELECT * FROM tb_login WHERE username='$user'";
         $result = mysqli_query($conn, $query);
         $num = mysqli_num_rows($result);
 
@@ -22,7 +22,7 @@ if (isset($_POST['tambah'])) {
             header('location:data_user.php');
         } else {
             echo "<script>
-                alert('User sudah adaa!!!');
+                alert('Gagal menambah!! User sudah adaa!!');
             </script>";
         }
     }
@@ -84,7 +84,7 @@ if (isset($_POST['tambah'])) {
                                                     </div>
                                                     <!-- pilih role -->
                                                     <div class="form-group">
-                                                        <select name="role" class="form-control rounded-pill" style="font-size: 13px; height: 50px">
+                                                        <select name="role" class="form-control rounded-pill" style="font-size: 13px; height: 50px" required>
                                                             <option value="" selected>Pilih Role</option>
                                                             <?php
                                                             $result = mysqli_query($conn, "SELECT * FROM tb_role");

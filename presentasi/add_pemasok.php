@@ -5,11 +5,19 @@ session_start();
 if (isset($_POST['tambah'])) {
     $pemasok = $_POST['pemasok'];
 
-    $query = "INSERT INTO tb_pemasok (pemasok)
-    VALUES ('$pemasok')";
+    $q = mysqli_query($conn, "SELECT * FROM tb_pemasok WHERE pemasok='$pemasok'");
+    $cek = mysqli_num_rows($q);
+    // cek apakah pemasok sudah ada
+    if ($cek == 1) {
+        echo "<script>
+                alert('Pemasok sudah ada!');
+            </script>";
+    } else {
+        $query = "INSERT INTO tb_pemasok (pemasok) VALUES ('$pemasok')";
 
-    mysqli_query($conn, $query);
-    header('location:data_pemasok.php');
+        mysqli_query($conn, $query);
+        header('location:data_pemasok.php');
+    }
 }
 ?>
 

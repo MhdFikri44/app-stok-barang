@@ -9,15 +9,24 @@ if (isset($_POST['tambah'])) {
     $jumlah = $_POST['jumlah'];
     $pemasok = $_POST['pemasok'];
 
-    // $gambar = basename($_FILES['gambar']['name']);
-    // $target_file = 'uploaded/' . $gambar;
-    // move_uploaded_file($_FILES['gambar']['tmp_name'], $target_file);
+    $gambar = basename($_FILES['gambar']['name']);
+    $target_file = 'uploaded/' . $gambar;
+    move_uploaded_file($_FILES['gambar']['tmp_name'], $target_file);
 
-    $query = "INSERT INTO tb_data (kode_barang, nama_barang, kategori_id, jumlah, pemasok_id) 
-    VALUES ('$kode_barang','$nama_barang','$kategori','$jumlah','$pemasok')";
+    $q = mysqli_query($conn, "SELECT * FROM tb_data WHERE kode_barang='$kode_barang'");
+    $cek = mysqli_num_rows($q);
+    // cek apakah kode sudah ada
+    if ($cek == 1) {
+        echo "<script>
+                alert('Kode yang digunakan sudah ada!');
+            </script>";
+    } else {
+        $query = "INSERT INTO tb_data (kode_barang, nama_barang, kategori_id, jumlah, pemasok_id, gambar) 
+                    VALUES ('$kode_barang','$nama_barang','$kategori','$jumlah','$pemasok','$gambar')";
 
-    mysqli_query($conn, $query);
-    header('location:admin.php');
+        mysqli_query($conn, $query);
+        header('location:admin.php');
+    }
 }
 ?>
 
@@ -76,7 +85,7 @@ if (isset($_POST['tambah'])) {
                                                     </div>
                                                     <!-- kategori -->
                                                     <div class="form-group">
-                                                        <select name="kategori" class="form-control rounded-pill" style="font-size: 13px; height: 50px">
+                                                        <select name="kategori" class="form-control rounded-pill" style="font-size: 13px; height: 50px" required>
                                                             <option value="" selected>Pilih Kategori</option>
                                                             <?php
                                                             $result = mysqli_query($conn, "SELECT * FROM tb_kategori");
@@ -91,7 +100,7 @@ if (isset($_POST['tambah'])) {
                                                     </div>
                                                     <!-- pemasok -->
                                                     <div class="form-group">
-                                                        <select name="pemasok" class="form-control rounded-pill" style="font-size: 13px; height: 50px">
+                                                        <select name="pemasok" class="form-control rounded-pill" style="font-size: 13px; height: 50px" required>
                                                             <option value="" selected>Pilih Pemasok</option>
                                                             <?php
                                                             $result = mysqli_query($conn, "SELECT * FROM tb_pemasok");
@@ -100,6 +109,11 @@ if (isset($_POST['tambah'])) {
                                                             <?php endwhile; ?>
                                                         </select>
                                                     </div>
+                                                    <!-- gambar -->
+                                                    <div class="form-group">
+                                                        <input type="file" name="gambar" style="font-size: 12px;" required>
+                                                    </div>
+
 
                                                     <!-- tambah -->
                                                     <button type="submit" name="tambah" class="btn btn-primary btn-user btn-block">Tambah</button>

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 24, 2023 at 10:07 AM
+-- Generation Time: Jul 26, 2023 at 12:00 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -33,17 +33,20 @@ CREATE TABLE `tb_data` (
   `nama_barang` varchar(24) NOT NULL,
   `kategori_id` int(10) NOT NULL,
   `jumlah` int(100) NOT NULL,
-  `pemasok_id` int(10) NOT NULL
+  `pemasok_id` int(10) NOT NULL,
+  `gambar` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `tb_data`
 --
 
-INSERT INTO `tb_data` (`id_data`, `kode_barang`, `nama_barang`, `kategori_id`, `jumlah`, `pemasok_id`) VALUES
-(5, 'CAM001', 'Kamera Canon', 4, 12, 3),
-(7, 'P001', 'POCO X3', 1, 2, 1),
-(8, 'BK001', 'Buku Tulis', 7, 50, 5);
+INSERT INTO `tb_data` (`id_data`, `kode_barang`, `nama_barang`, `kategori_id`, `jumlah`, `pemasok_id`, `gambar`) VALUES
+(5, 'CAM001', 'Kamera Canon', 4, 12, 3, 'kamera.jpg'),
+(7, 'P001', 'POCO X3', 1, 2, 1, 'handphone.jpg'),
+(8, 'BK001', 'Buku Tulis', 7, 50, 5, 'buku.jpg'),
+(9, 'BK002', 'Buku Gambar', 7, 10, 5, 'buku.jpg'),
+(13, 'LP001', 'mesin', 3, 3, 2, 'mesin_cuci.jpg');
 
 -- --------------------------------------------------------
 
@@ -127,8 +130,7 @@ CREATE TABLE `tb_role` (
 
 INSERT INTO `tb_role` (`id_role`, `role`) VALUES
 (1, 'Admin'),
-(2, 'Pimpinan'),
-(3, 'Staff');
+(2, 'Pimpinan');
 
 --
 -- Indexes for dumped tables
@@ -180,19 +182,19 @@ ALTER TABLE `tb_role`
 -- AUTO_INCREMENT for table `tb_data`
 --
 ALTER TABLE `tb_data`
-  MODIFY `id_data` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id_data` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `tb_kategori`
 --
 ALTER TABLE `tb_kategori`
-  MODIFY `id_kategori` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id_kategori` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `tb_login`
 --
 ALTER TABLE `tb_login`
-  MODIFY `id_login` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_login` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `tb_pemasok`
