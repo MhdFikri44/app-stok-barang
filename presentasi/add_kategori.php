@@ -13,9 +13,7 @@ if (isset($_POST['tambah'])) {
                 alert('Kategori sudah ada!');
             </script>";
     } else {
-        $query = "INSERT INTO tb_kategori (kategori) VALUES ('$kategori')";
-
-        mysqli_query($conn, $query);
+        mysqli_query($conn, "INSERT INTO tb_kategori (kategori) VALUES ('$kategori')");
         header('location:data_kategori.php');
     }
 }
@@ -68,7 +66,7 @@ if (isset($_POST['tambah'])) {
                                                 <form class="user" method="post" action="" enctype="multipart/form-data">
                                                     <!-- Tambah Kategori -->
                                                     <div class="form-group">
-                                                        <input type="text" name="kategori" class="form-control form-control-user" placeholder="Tambah kategori" required>
+                                                        <input type="text" name="kategori" class="form-control form-control-user" placeholder="Tambah kategori" required autofocus>
                                                     </div>
                                                     <!-- Submit -->
                                                     <button type="submit" name="tambah" class="btn btn-primary btn-user btn-block">Tambah</button>

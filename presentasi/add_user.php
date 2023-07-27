@@ -76,7 +76,7 @@ if (isset($_POST['tambah'])) {
                                                 <form class="user" method="post" action="">
                                                     <!-- username -->
                                                     <div class="form-group">
-                                                        <input type="text" name="username" class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Username" required>
+                                                        <input type="text" name="username" class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Username" required autofocus>
                                                     </div>
                                                     <!-- password -->
                                                     <div class="form-group">

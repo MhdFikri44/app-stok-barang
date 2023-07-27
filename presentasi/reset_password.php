@@ -2,34 +2,29 @@
 include 'components/koneksi.php';
 session_start();
 
+if (!isset($_SESSION['user'])) {
+    header('location:index.php');
+}
 if (isset($_SESSION['masuk'])) {
     header('location:admin.php');
 }
 
-if (isset($_POST['masuk'])) {
-    $user = $_POST['username'];
-    $pass = $_POST['password'];
+$user = $_SESSION['user'];
 
-    $query = "SELECT * FROM tb_login WHERE username='$user' AND password='$pass'";
-    $result = mysqli_query($conn, $query);
-    $num = mysqli_num_rows($result);
+if (isset($_POST['simpan'])) {
+    $passBaru = $_POST['password'];
 
-    if ($num == 1) {
-        $row = mysqli_fetch_assoc($result);
-        if ($row['role_id'] == '1') {
-            $_SESSION['masuk'] = $row['username'];
-            $_SESSION['role'] = 'Admin';
-            header('location:admin.php');
-        }
-        if ($row['role_id'] == '2') {
-            $_SESSION['masuk'] = $row['username'];
-            $_SESSION['role'] = 'Pimpinan';
-            header('location:user.php');
-        }
-    } else {
+    // cek password sama atau tidak
+    $q = mysqli_query($conn, "SELECT * FROM tb_login WHERE password='$passBaru'");
+    $cek = mysqli_num_rows($q);
+    if ($cek == 1) {
         echo "<script>
-                alert('User atau sandi salah!');
+                alert('Masukkan password yg berbeda!');
             </script>";
+    } else {
+        mysqli_query($conn, "UPDATE tb_login SET password='$passBaru' WHERE username='$user'");
+        session_destroy();
+        header('location:index.php');
     }
 }
 ?>
@@ -39,7 +34,7 @@ if (isset($_POST['masuk'])) {
 
 <head>
     <?php include 'components/head.php'; ?>
-    <title>Login</title>
+    <title>Ganti Password</title>
 </head>
 
 <body class="bg-gradient-primary">
@@ -61,26 +56,17 @@ if (isset($_POST['masuk'])) {
                             <div class="col-lg-6">
                                 <div class="p-5">
                                     <div class="text-center">
-                                        <h1 class="h4 text-gray-900 mb-4">Aplikasi Gudang Barang</h1>
+                                        <h1 class="h4 text-gray-900 mb-4">Masukkan Password Baru</h1>
                                     </div>
                                     <form class="user" method="post" action="">
                                         <!-- username -->
                                         <div class="form-group">
-                                            <input type="text" name="username" class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Username" required autofocus>
-                                        </div>
-                                        <!-- password -->
-                                        <div class="form-group">
-                                            <input type="password" name="password" class="form-control form-control-user" id="exampleInputPassword" placeholder="Password" required>
+                                            <input type="password" name="password" class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Password baru" required autofocus>
                                         </div>
                                         <!-- submit -->
-                                        <button type="submit" name="masuk" class="btn btn-primary btn-user btn-block">Masuk</button>
+                                        <button type="submit" name="simpan" class="btn btn-primary btn-user btn-block">Simpan</button>
                                     </form>
-                                    <hr />
-                                    <div class="text-center">
-                                        <a class="small" href="forgot_password.php">Lupa password?</a>
-                                    </div>
                                 </div>
-
                             </div>
                         </div>
                     </div>

@@ -55,6 +55,7 @@ if ($_SESSION['role'] == 'Admin') {
                                             <th>Kategori</th>
                                             <th>Jumlah</th>
                                             <th>Pemasok</th>
+                                            <th>Gambar</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -68,6 +69,9 @@ if ($_SESSION['role'] == 'Admin') {
                                                 <td><?= $row['kategori']; ?></td>
                                                 <td><?= $row['jumlah']; ?></td>
                                                 <td><?= $row['pemasok']; ?></td>
+                                                <td>
+                                                    <img src="uploaded/<?= $row['gambar']; ?>" width="100" height="100" style="background-position: center; object-fit: cover;">
+                                                </td>
                                             </tr>
                                         <?php endwhile; ?>
                                     </tbody>

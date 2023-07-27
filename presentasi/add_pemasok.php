@@ -68,7 +68,7 @@ if (isset($_POST['tambah'])) {
                                                 <form class="user" method="post" action="" enctype="multipart/form-data">
                                                     <!-- kode -->
                                                     <div class="form-group">
-                                                        <input type="text" name="pemasok" class="form-control form-control-user" placeholder="Tambah pemasok" required>
+                                                        <input type="text" name="pemasok" class="form-control form-control-user" placeholder="Tambah pemasok" required autofocus>
                                                     </div>
 
                                                     <!-- tambah -->
