@@ -1,1 +1,1 @@
-Diperuntukan menyelesaikan tugas program
+Aplikasi Stok Barang - Tugas Program2
